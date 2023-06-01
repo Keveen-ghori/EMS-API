@@ -1,0 +1,12 @@
+D:\EMS\EMS API\EMS.Host\bin\Debug\net6.0\EMS.Host.deps.json
+D:\EMS\EMS API\EMS.Host\bin\Debug\net6.0\EMS.Host.dll
+D:\EMS\EMS API\EMS.Host\bin\Debug\net6.0\EMS.Host.pdb
+D:\EMS\EMS API\EMS.Host\obj\Debug\net6.0\EMS.Host.csproj.AssemblyReference.cache
+D:\EMS\EMS API\EMS.Host\obj\Debug\net6.0\EMS.Host.GeneratedMSBuildEditorConfig.editorconfig
+D:\EMS\EMS API\EMS.Host\obj\Debug\net6.0\EMS.Host.AssemblyInfoInputs.cache
+D:\EMS\EMS API\EMS.Host\obj\Debug\net6.0\EMS.Host.AssemblyInfo.cs
+D:\EMS\EMS API\EMS.Host\obj\Debug\net6.0\EMS.Host.csproj.CoreCompileInputs.cache
+D:\EMS\EMS API\EMS.Host\obj\Debug\net6.0\EMS.Host.dll
+D:\EMS\EMS API\EMS.Host\obj\Debug\net6.0\refint\EMS.Host.dll
+D:\EMS\EMS API\EMS.Host\obj\Debug\net6.0\EMS.Host.pdb
+D:\EMS\EMS API\EMS.Host\obj\Debug\net6.0\ref\EMS.Host.dll
