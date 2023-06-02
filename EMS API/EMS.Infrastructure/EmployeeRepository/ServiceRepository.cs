@@ -1,4 +1,4 @@
-﻿using EMS.Application.IEmployeeService;
+﻿using EMS.Application.Contract;
 using EMS.Data.Settings;
 using System;
 using System.Collections.Generic;

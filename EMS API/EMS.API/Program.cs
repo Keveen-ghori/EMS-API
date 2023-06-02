@@ -1,8 +1,8 @@
 using EMS.Data.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using EMS.Application.IEmployeeService;
 using EMS.Infrastructure.EmployeeRepository;
+using EMS.Application.Contract;
 
 var builder = WebApplication.CreateBuilder(args);
 

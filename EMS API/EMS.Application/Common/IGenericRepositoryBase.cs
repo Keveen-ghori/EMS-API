@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace EMS.Application.Common
 {
-    public interface IEmployeeRepositoryBase<T>
+    public interface IGenericRepositoryBase<T>
     {
-        IQueryable<T> GetAll(Expression<Func<T, bool>> expression);
+        IQueryable<T> GetAll();
         IQueryable<T> GetById(Expression<Func<T, bool>> expression);
         void Create(T entity);
         void Update(T entity);

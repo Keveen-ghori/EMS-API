@@ -72,3 +72,7 @@ D:\EMS\EMS API\EMS.API\obj\Debug\net6.0\refint\EMS.API.dll
 D:\EMS\EMS API\EMS.API\obj\Debug\net6.0\EMS.API.pdb
 D:\EMS\EMS API\EMS.API\obj\Debug\net6.0\EMS.API.genruntimeconfig.cache
 D:\EMS\EMS API\EMS.API\obj\Debug\net6.0\ref\EMS.API.dll
+D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\AutoMapper.dll
+D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\MediatR.dll
+D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\MediatR.Extensions.Microsoft.DependencyInjection.dll

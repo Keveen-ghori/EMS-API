@@ -1,5 +1,5 @@
 ﻿using EMS.API.DTO.Employee;
-using EMS.Application.IEmployeeService;
+using EMS.Application.Contract;
 using EMS.Data.Models;
 using EMS.Data.Settings;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Infrastructure.EmployeeRepository
 {
-    public class EmployeeRepository : EmployeeRepositoryBase<Employee>, IEmployeeRepository
+    public class EmployeeRepository : GenericRepositoryBase<Employee>, IEmployeeRepository
     {
 
         public EmployeeRepository(EmployeeManagementContext context) : base(context)

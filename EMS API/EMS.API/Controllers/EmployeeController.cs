@@ -1,51 +1,96 @@
-﻿using EMS.API.Common;
+﻿using EMS.API.Api.Models.ApiModels;
+using EMS.API.Common;
 using EMS.API.DTO.Employee;
-using EMS.Application.IEmployeeService;
+using EMS.Application.Contract;
+using EMS.Application.DTO.Employee;
+using EMS.Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EMS.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IServiceRepository wrapperRepository;
+        private readonly IServiceRepository serviceRepository;
 
-        public EmployeeController(IServiceRepository wrapperRepository)
+        public EmployeeController(IServiceRepository serviceRepository)
         {
-            this.wrapperRepository = wrapperRepository;
+            this.serviceRepository = serviceRepository;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public ApiResponse<List<GetEmployee>> Get()
         {
-            List<GetEmployee> model = new();
+            var apiResponse = new ApiResponse<List<GetEmployee>>();
 
-            var Emp = this.wrapperRepository.Employee.GetAll(x => x.Deleted_AT == null);
-
-            foreach (var item in Emp)
+            try
             {
-                model.Add(EmployeeMapper.MapToModel(item));
+                List<GetEmployee> model = new List<GetEmployee>();
+
+                var Emp = this.serviceRepository.Employee.GetAll();
+
+                foreach (var item in Emp)
+                {
+                    model.Add(EmployeeMapper.MapToModel(item));
+                }
+                return apiResponse.HandleResponse(model);
             }
-            return Ok(model);
+            catch (Exception ex)
+            {
+                return apiResponse.HandleException(ex.Message);
+            }
+
         }
 
         [HttpGet]
         [Route("{EmployeeId:long}")]
-        public IActionResult GetById(long EmployeeId)
+        public ApiResponse<List<GetEmployee>> GetById(long EmployeeId)
         {
-            List<GetEmployee> model = new();
+            var apiResponse = new ApiResponse<List<GetEmployee>>();
 
-            var Emp = this.wrapperRepository.Employee.GetById(emp => emp.EmployeeId == EmployeeId);
-            if (Emp == null)
+            try
             {
-                return NotFound();
+                List<GetEmployee> model = new();
+
+                var Emp = this.serviceRepository.Employee.GetById(emp => emp.EmployeeId == EmployeeId);
+
+                model.Add(EmployeeMapper.MapToModel(Emp.First()));
+
+                return apiResponse.HandleResponse(model);
             }
-
-            model.Add(EmployeeMapper.MapToModel(Emp.First()));
-
-            return Ok(model);
+            catch (Exception ex)
+            {
+                return apiResponse.HandleException(ex.Message);
+            }
         }
+
+        [HttpPost]
+        public ApiResponse<List<GetEmployee>> CreateEmp([FromBody] Employee model)
+        {
+            var apiResponse = new ApiResponse<List<GetEmployee>>();
+
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    this.serviceRepository.Employee.Create(model);
+
+                    var modelDto = new List<GetEmployee>();
+                    modelDto.Add(EmployeeMapper.MapToModel(model));
+                    return apiResponse.HandleResponse(modelDto);
+                }
+                return apiResponse.HandleModelStateFailure(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return apiResponse.HandleException(ex.Message);
+            }
+        }
+
+
     }
 }

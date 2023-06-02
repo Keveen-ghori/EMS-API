@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace EMS.Infrastructure.EmployeeRepository
 {
-    public class EmployeeRepositoryBase<T>: IEmployeeRepositoryBase<T> where T: class
+    public class GenericRepositoryBase<T>: IGenericRepositoryBase<T> where T: class
     {
         private readonly EmployeeManagementContext context;
 
-        public EmployeeRepositoryBase(EmployeeManagementContext context)
+        public GenericRepositoryBase(EmployeeManagementContext context)
         {
             this.context = context;
         }
@@ -29,9 +29,9 @@ namespace EMS.Infrastructure.EmployeeRepository
             this.context.Set<T>().Remove(entity);
         }
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> expression)
+        public IQueryable<T> GetAll()
         {
-            return this.context.Set<T>().Where(expression).AsNoTracking();
+            return this.context.Set<T>().AsNoTracking();
         }
 
         public IQueryable<T> GetById(Expression<Func<T, bool>> expression)
