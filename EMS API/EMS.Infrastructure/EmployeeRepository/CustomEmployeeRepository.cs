@@ -50,9 +50,18 @@ namespace EMS.Infrastructure.EmployeeRepository
             return saveEmployeeDto;
         }   
 
-        public async Task UpdateEmployee(SaveUpdatedEmployeeDto entity)
+        public async Task UpdateEmployee(Employee entity)
         {
             this.context.Entry(entity).State = EntityState.Modified;
+            entity.UserName = entity.FirstName + " " + entity.LastName;
+            entity.Updated_At = DateTime.Now;
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task UpdateEmpUsingpatch(Employee entity)
+        {
+            this.context.Entry(entity).State = EntityState.Modified;
+            entity.Updated_At = DateTime.Now;
             await this.context.SaveChangesAsync();
         }
 

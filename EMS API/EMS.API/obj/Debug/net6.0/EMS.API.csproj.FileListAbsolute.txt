@@ -14,6 +14,7 @@ D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\System.Web.Helpers.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\System.Web.WebPages.dll
+D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -30,6 +31,7 @@ D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Microsoft.OpenApi.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -82,3 +84,5 @@ D:\EMS\EMS API\EMS.API\obj\Debug\net6.0\refint\EMS.API.dll
 D:\EMS\EMS API\EMS.API\obj\Debug\net6.0\EMS.API.pdb
 D:\EMS\EMS API\EMS.API\obj\Debug\net6.0\EMS.API.genruntimeconfig.cache
 D:\EMS\EMS API\EMS.API\obj\Debug\net6.0\ref\EMS.API.dll
+D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\EMS\EMS API\EMS.API\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

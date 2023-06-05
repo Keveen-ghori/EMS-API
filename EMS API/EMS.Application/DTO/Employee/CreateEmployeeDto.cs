@@ -36,6 +36,7 @@ namespace EMS.Application.DTO.Employee
         public DateTime? DOB { get; set; }
         [DataMember]
         [Required(ErrorMessage = SystemMessages.GenderRequired)]
+        [Range(1, 3, ErrorMessage = "Invalid value for Gender.")]
         public byte Gender { get; set; } = (byte)EMS.Core.Enums.Gender.Male;
     }
 }

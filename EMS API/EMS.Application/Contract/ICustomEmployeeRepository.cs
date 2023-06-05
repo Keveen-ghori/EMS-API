@@ -1,4 +1,5 @@
 ﻿using EMS.Application.DTO.Employee;
+using EMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace EMS.Application.Contract
     public interface ICustomEmployeeRepository
     {
         Task<SaveEmployeeDto> CreateEmployee(SaveEmployeeDto entity);
-        Task UpdateEmployee(SaveUpdatedEmployeeDto entity);
+        Task UpdateEmployee(Employee entity);
+        Task UpdateEmpUsingpatch(Employee entity);
     }
 }

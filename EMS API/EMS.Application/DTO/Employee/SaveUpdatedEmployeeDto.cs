@@ -8,6 +8,11 @@ namespace EMS.Application.DTO.Employee
 {
     public class SaveUpdatedEmployeeDto: UpdateEmployeeDto
     {
+        public SaveUpdatedEmployeeDto()
+        {
+            // Parameterless constructor
+        }
+
         public SaveUpdatedEmployeeDto(UpdateEmployeeDto emp)
         {
             FirstName = emp.FirstName;

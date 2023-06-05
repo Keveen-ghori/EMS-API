@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace EMS.Application.DTO.Employee
 {
     [DataContract]
-    public class UpdateEmployeeDto: EmployeeBaseDto
+    public class UpdateEmployeeDto
     {
         [DataMember]
         public string FirstName { get; set; } = string.Empty;
@@ -19,5 +19,9 @@ namespace EMS.Application.DTO.Employee
         public DateTime? DOB { get; set; }
         [DataMember]
         public byte Gender { get; set; } = (byte)EMS.Core.Enums.Gender.Male;
+        [DataMember]
+        public bool Status { get; set; } = true;
+        [DataMember]
+        public bool IsLocked { get; set; }
     }
 }

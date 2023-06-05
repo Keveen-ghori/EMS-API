@@ -22,7 +22,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<EmployeeManagementContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 //Register interface class
 builder.Services.AddScoped<IunitOfWorks, UnitOfWorks>();

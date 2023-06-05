@@ -18,6 +18,8 @@ namespace EMS.Application.Profiles
             CreateMap<Employee, UpdateEmployeeDto>().ReverseMap();
             CreateMap<SaveEmployeeDto, CreateEmployeeDto>().ReverseMap();
             CreateMap<SaveEmployeeDto, EmployeeDto>().ReverseMap();
+            CreateMap<SaveUpdatedEmployeeDto, UpdateEmployeeDto>().ReverseMap();
+            CreateMap<Employee, EmployeeForUpdateDto>().ReverseMap();
         }
     }
 }

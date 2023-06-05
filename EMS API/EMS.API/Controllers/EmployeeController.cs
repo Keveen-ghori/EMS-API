@@ -9,6 +9,7 @@ using EMS.Data.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -78,7 +79,7 @@ namespace EMS.API.Controllers
                 {
                     return apiResponse.HandleModelStateFailure(ModelState);
                 }
-                
+
                 var newEmp = await _mediator.Send(new CreateEmployeeRequests { EmployeeDto = model });
                 return apiResponse.HandleResponse(newEmp.EmployeeId);
 
@@ -92,7 +93,7 @@ namespace EMS.API.Controllers
 
         #region Delete Employee
         [HttpDelete("{EmployeeId:long}")]
-        public async Task<ApiResponse<NoContentResult>> Delete([FromRoute]long EmployeeId)
+        public async Task<ApiResponse<NoContentResult>> Delete([FromRoute] long EmployeeId)
         {
             var apiResponse = new ApiResponse<NoContentResult>();
             try
@@ -128,6 +129,51 @@ namespace EMS.API.Controllers
 
         }
         #endregion
+
+        #region Employee Update
+        [HttpPut("{EmployeeId:long}")]
+        public async Task<ApiResponse<bool>> UpdateEmp([FromBody] UpdateEmployeeDto model, long EmployeeId)
+        {
+            var apiResponse = new ApiResponse<bool>();
+
+            try
+            {
+                var command = await _mediator.Send(new UpdateEmployeeRequest { UpdateEmp = model, EmployeeId = EmployeeId });
+
+                return apiResponse.HandleResponse(command);
+            }
+            catch (Exception ex)
+            {
+                return apiResponse.HandleException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region Path method to Update Emp
+        [HttpPatch("{EmployeeId:long}")]
+        public async Task<ApiResponse<NoContentResult>> JsonPatchWithModelState(
+            [FromRoute] long EmployeeId,
+            [FromBody] JsonPatchDocument<EmployeeForUpdateDto> patchDoc)
+        {
+            var apiResponse = new ApiResponse<NoContentResult>();
+            try
+            {
+                await _mediator.Send(new UpdateEmpUsingPatchRequest
+                {
+                    employeeForUpdateDto = patchDoc,
+                    Employeeid = EmployeeId 
+                });
+
+                return apiResponse.HandleResponse(NoContent());
+            }
+            catch (Exception ex)
+            {
+                return apiResponse.HandleException(ex.Message);
+            }
+        }
+        #endregion
+
     }
 }
 

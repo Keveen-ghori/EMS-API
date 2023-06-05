@@ -10,8 +10,10 @@ using System.Threading.Tasks;
 namespace EMS.Application.DTO.Employee
 {
     [DataContract]
-    public class EmployeeDto: EmployeeBaseDto
+    public class EmployeeDto
     {
+        [DataMember]
+        public long EmployeeId { get; set; }
         [DataMember]
         public string? UserName { get; set; } = string.Empty;
         [DataMember]

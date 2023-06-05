@@ -25,6 +25,10 @@ namespace EMS.Application.Features.Employees.Handlers.Queruies
         public async Task<EmployeeDto> Handle(EmployeeDetailsRequests request, CancellationToken cancellationToken)
         {
             var Emp = await this.unitOfWorks.Employee.GetByIdAsync(x=>x.Deleted_AT == null && x.EmployeeId == request.EmployeeId);
+            if (Emp == null)
+            {
+                throw new InvalidOperationException("Employee does not exists.");
+            }
              return this.mapper.Map<EmployeeDto>(Emp);
         }
     }
