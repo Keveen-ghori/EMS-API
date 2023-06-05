@@ -32,7 +32,8 @@ namespace EMS.API.Controllers
 
         #region Get All Employees
         [HttpGet]
-        public async Task<ApiResponse<List<EmployeeDto>>> GetEmployees()
+        [Route("GetAllEmployees")]
+        public async Task<ApiResponse<List<EmployeeDto>>> GetAllEmployees()
         {
             var apiResponse = new ApiResponse<List<EmployeeDto>>();
 
@@ -50,7 +51,7 @@ namespace EMS.API.Controllers
 
         #region Get Employees
         [HttpGet]
-        [Route("{EmployeeId:long}")]
+        [Route("GetEmpById/{EmployeeId:long}")]
         public async Task<ApiResponse<EmployeeDto>> GetEmpById([FromRoute] long EmployeeId)
         {
             var apiResponse = new ApiResponse<EmployeeDto>();
@@ -70,6 +71,7 @@ namespace EMS.API.Controllers
 
         #region Create Employee
         [HttpPost]
+        [Route("CreateEmp")]
         public async Task<ApiResponse<long>> CreateEmp([FromBody] CreateEmployeeDto model)
         {
             var apiResponse = new ApiResponse<long>();
@@ -94,7 +96,7 @@ namespace EMS.API.Controllers
         #endregion
 
         #region Delete Employee
-        [HttpDelete("{EmployeeId:long}")]
+        [HttpDelete("DeleteEmp/{EmployeeId:long}")]
         public async Task<ApiResponse<NoContentResult>> Delete([FromRoute] long EmployeeId)
         {
             var apiResponse = new ApiResponse<NoContentResult>();
@@ -114,7 +116,7 @@ namespace EMS.API.Controllers
 
         #region Check Email
         [HttpGet]
-        [Route("{Email}")]
+        [Route("CheckEmailExists/{Email}")]
         public async Task<ApiResponse<bool>> CheckEmail([FromRoute] string Email)
         {
             var apiResponse = new ApiResponse<bool>();
@@ -133,7 +135,7 @@ namespace EMS.API.Controllers
         #endregion
 
         #region Employee Update
-        [HttpPut("{EmployeeId:long}")]
+        [HttpPut("UpdateEmp/{EmployeeId:long}")]
         public async Task<ApiResponse<bool>> UpdateEmp([FromBody] UpdateEmployeeDto model, long EmployeeId)
         {
             var apiResponse = new ApiResponse<bool>();
@@ -153,9 +155,9 @@ namespace EMS.API.Controllers
         #endregion
 
         #region Path method to Update Emp
-        [HttpPatch("{EmployeeId:long}")]
+        [HttpPatch]
+        [Route("EmpUpdateForPatch")]
         public async Task<ApiResponse<NoContentResult>> JsonPatchWithModelState(
-            [FromRoute] long EmployeeId,
             [FromBody] JsonPatchDocument<EmployeeForUpdateDto> patchDoc)
         {
             var apiResponse = new ApiResponse<NoContentResult>();
@@ -163,8 +165,7 @@ namespace EMS.API.Controllers
             {
                 await _mediator.Send(new UpdateEmpUsingPatchRequest
                 {
-                    employeeForUpdateDto = patchDoc,
-                    Employeeid = EmployeeId 
+                    employeeForUpdateDto = patchDoc
                 });
 
                 return apiResponse.HandleResponse(NoContent());

@@ -12,10 +12,10 @@ using System.Web.Helpers;
 
 namespace EMS.Infrastructure.EmployeeRepository
 {
-    public class CustomEmployeeRepository: ICustomEmployeeRepository
+    public class CustomEmployeeRepository : ICustomEmployeeRepository
     {
         private readonly EmployeeManagementContext context;
-        public CustomEmployeeRepository(EmployeeManagementContext context) 
+        public CustomEmployeeRepository(EmployeeManagementContext context)
         {
             this.context = context;
         }
@@ -37,7 +37,7 @@ namespace EMS.Infrastructure.EmployeeRepository
             await this.context.Employees.AddAsync(Emp);
             await this.context.SaveChangesAsync();
 
-            var newEmp = this.context.Employees.FirstOrDefault(emp=>emp.Email == entity.Email);
+            var newEmp = this.context.Employees.FirstOrDefault(emp => emp.Email == entity.Email);
             SaveEmployeeDto saveEmployeeDto = new SaveEmployeeDto
             {
                 EmployeeId = newEmp.EmployeeId,
@@ -48,20 +48,33 @@ namespace EMS.Infrastructure.EmployeeRepository
             };
 
             return saveEmployeeDto;
-        }   
+        }
 
         public async Task UpdateEmployee(Employee entity)
         {
             this.context.Entry(entity).State = EntityState.Modified;
             entity.UserName = entity.FirstName + " " + entity.LastName;
             entity.Updated_At = DateTime.Now;
+            if(!entity.IsLocked)
+            {
+                entity.Attemps = 0;
+            }
+            else
+            {
+                entity.Attemps = entity.Total_Attemps;
+            }
             await this.context.SaveChangesAsync();
         }
 
-        public async Task UpdateEmpUsingpatch(Employee entity)
+        public async Task UpdateEmpUsingpatch(IEnumerable<Employee> entity)
         {
-            this.context.Entry(entity).State = EntityState.Modified;
-            entity.Updated_At = DateTime.Now;
+
+            foreach (var emp in entity)
+            {
+                this.context.Entry(emp).State = EntityState.Modified;
+                emp.Updated_At = DateTime.Now;
+            }
+
             await this.context.SaveChangesAsync();
         }
 

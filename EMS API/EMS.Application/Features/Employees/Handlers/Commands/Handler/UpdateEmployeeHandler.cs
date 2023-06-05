@@ -27,6 +27,7 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
             if (Emp is null)
                 throw new InvalidOperationException("Employee not found.");
             mapper.Map(request.UpdateEmp, Emp);
+            this.unitOfWorks.QueryEmployee?.UpdateEmployee(Emp);
             return true;
         }
     }

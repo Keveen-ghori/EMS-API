@@ -12,6 +12,6 @@ namespace EMS.Application.Contract
     {
         Task<SaveEmployeeDto> CreateEmployee(SaveEmployeeDto entity);
         Task UpdateEmployee(Employee entity);
-        Task UpdateEmpUsingpatch(Employee entity);
+        Task UpdateEmpUsingpatch(IEnumerable<Employee> entity);
     }
 }

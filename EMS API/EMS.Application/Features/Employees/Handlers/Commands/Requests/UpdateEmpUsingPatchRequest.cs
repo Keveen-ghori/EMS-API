@@ -12,6 +12,5 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Requests
     public class UpdateEmpUsingPatchRequest : IRequest<Unit>
     {
         public JsonPatchDocument<EmployeeForUpdateDto> employeeForUpdateDto { get; set; } = new();
-        public long Employeeid { get; set; }
     }
 }

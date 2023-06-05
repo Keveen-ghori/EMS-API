@@ -28,24 +28,28 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
 
         public async Task<Unit> Handle(UpdateEmpUsingPatchRequest request, CancellationToken cancellationToken)
         {
-            var employeeEntity = await unitOfWorks.Employee.GetByIdAsync(x => x.EmployeeId == request.Employeeid);
-            if (employeeEntity == null)
+            var employeeEntities = await unitOfWorks.Employee.GetAllAsync(x => x.Deleted_AT == null);
+            if (employeeEntities == null || !employeeEntities.Any())
             {
-                throw new InvalidOperationException("Employee not found.");
+                throw new InvalidOperationException("No employees found.");
             }
 
-            // Apply the patch operations to the EmployeeForUpdateDto object
+            // Apply the patch operations to each Employee entity
             var patchedEmployeeDto = new EmployeeForUpdateDto();
             request.employeeForUpdateDto.ApplyTo(patchedEmployeeDto);
 
-            // Map the patched EmployeeForUpdateDto to the Employee entity
-            mapper.Map(patchedEmployeeDto, employeeEntity);
+            foreach (var employeeEntity in employeeEntities)
+            {
+                // Map the patched EmployeeForUpdateDto to the Employee entity
+                mapper.Map(patchedEmployeeDto, employeeEntity);
+            }
 
-            // Update the employee entity
-            unitOfWorks.QueryEmployee.UpdateEmpUsingpatch(employeeEntity);
+            // Update all the employee entities
+            unitOfWorks.QueryEmployee?.UpdateEmpUsingpatch(employeeEntities);
 
             return Unit.Value;
         }
+
 
 
 

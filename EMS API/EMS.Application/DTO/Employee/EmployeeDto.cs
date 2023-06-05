@@ -28,5 +28,9 @@ namespace EMS.Application.DTO.Employee
         public bool Status { get; set; }
         [DataMember]
         public bool IsLocked { get; set; }
+        [DataMember]
+        public int? Exp_days { get; set; } = (int)LoginManagement.Exp_days;
+        [DataMember]
+        public DateTime? Password_Updated_At { get; set; } = DateTime.Now;
     }
 }
