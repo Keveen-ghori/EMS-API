@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 using EMS.Data.Settings;
 using EMS.Application.Common;
 using EMS.Application.DTO.Employee;
+using EMS.Application.Features.Employees.Handlers.Commands.Requests;
 
-namespace EMS.Application.Features.Employees.Handlers.Commands
+namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
 {
     public class CreateEmployeeHandler : IRequestHandler<CreateEmployeeRequests, SaveEmployeeDto>
     {
@@ -27,13 +28,13 @@ namespace EMS.Application.Features.Employees.Handlers.Commands
 
         public async Task<SaveEmployeeDto> Handle(CreateEmployeeRequests request, CancellationToken cancellationToken)
         {
-            var EmailCheck = await this.unitOfWorks.Employee.IsEmailExists(x => x.Email == request.EmployeeDto.Email && x.Deleted_AT == null);
-            if(EmailCheck)
+            var EmailCheck = await unitOfWorks.Employee.IsEmailExists(x => x.Email == request.EmployeeDto.Email && x.Deleted_AT == null);
+            if (EmailCheck)
             {
                 throw new InvalidOperationException("Email already exists for an employee.");
             }
-            var Emp = this.mapper.Map<SaveEmployeeDto>(request.EmployeeDto);
-            Emp = await this.unitOfWorks.QueryEmployee.CreateEmployee(Emp);
+            var Emp = mapper.Map<SaveEmployeeDto>(request.EmployeeDto);
+            Emp = await unitOfWorks.QueryEmployee.CreateEmployee(Emp);
             return Emp;
         }
     }

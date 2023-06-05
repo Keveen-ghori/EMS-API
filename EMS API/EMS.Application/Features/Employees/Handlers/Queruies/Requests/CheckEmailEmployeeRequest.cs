@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Application.Features.Employees.Handlers.Queruies
+namespace EMS.Application.Features.Employees.Handlers.Queruies.Requests
 {
     public class CheckEmailEmployeeRequest : IRequest<bool>
     {

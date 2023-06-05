@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EMS.Application.Common;
 using EMS.Application.DTO.Employee;
+using EMS.Application.Features.Employees.Handlers.Commands.Requests;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Application.Features.Employees.Handlers.Commands
+namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
 {
     public class UpdateEmployeeHandler : IRequestHandler<UpdateEmployeeRequest, bool>
     {
@@ -22,10 +23,10 @@ namespace EMS.Application.Features.Employees.Handlers.Commands
         }
         public async Task<bool> Handle(UpdateEmployeeRequest request, CancellationToken cancellationToken)
         {
-            var Emp = await this.unitOfWorks.Employee.GetByIdAsync(x => x.Deleted_AT == null && x.EmployeeId == request.EmployeeId);
+            var Emp = await unitOfWorks.Employee.GetByIdAsync(x => x.Deleted_AT == null && x.EmployeeId == request.EmployeeId);
             if (Emp is null)
                 throw new InvalidOperationException("Employee not found.");
-            this.mapper.Map(request.UpdateEmp, Emp);
+            mapper.Map(request.UpdateEmp, Emp);
             return true;
         }
     }

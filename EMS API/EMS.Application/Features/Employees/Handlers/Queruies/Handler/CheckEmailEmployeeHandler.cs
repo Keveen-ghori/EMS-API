@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EMS.Application.Common;
+using EMS.Application.Features.Employees.Handlers.Queruies.Requests;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Application.Features.Employees.Handlers.Queruies
+namespace EMS.Application.Features.Employees.Handlers.Queruies.Handler
 {
     public class CheckEmailEmployeeHandler : IRequestHandler<CheckEmailEmployeeRequest, bool>
     {
@@ -22,7 +23,7 @@ namespace EMS.Application.Features.Employees.Handlers.Queruies
         }
         public async Task<bool> Handle(CheckEmailEmployeeRequest request, CancellationToken cancellationToken)
         {
-            var EmailCheck = await this.unitOfWorks.Employee.IsEmailExists(x=>x.Email == request.Email && x.Deleted_AT == null);
+            var EmailCheck = await unitOfWorks.Employee.IsEmailExists(x => x.Email == request.Email && x.Deleted_AT == null);
             return EmailCheck;
         }
     }

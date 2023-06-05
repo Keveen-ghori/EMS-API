@@ -9,8 +9,8 @@ using AutoMapper;
 using System.Reflection;
 using MediatR;
 using EMS.Application.DTO.Employee;
-using EMS.Application.Features.Employees.Handlers.Queruies;
 using EMS.Application.Profiles;
+using EMS.Application.Features.Employees.Handlers.Queruies.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 

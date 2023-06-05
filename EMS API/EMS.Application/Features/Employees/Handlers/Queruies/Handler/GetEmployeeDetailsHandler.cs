@@ -2,6 +2,7 @@
 using EMS.Application.Common;
 using EMS.Application.Contract;
 using EMS.Application.DTO.Employee;
+using EMS.Application.Features.Employees.Handlers.Queruies.Requests;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Application.Features.Employees.Handlers.Queruies
+namespace EMS.Application.Features.Employees.Handlers.Queruies.Handler
 {
     public class GetEmployeeDetailsHandler : IRequestHandler<EmployeeDetailsRequests, EmployeeDto>
     {
@@ -24,12 +25,12 @@ namespace EMS.Application.Features.Employees.Handlers.Queruies
 
         public async Task<EmployeeDto> Handle(EmployeeDetailsRequests request, CancellationToken cancellationToken)
         {
-            var Emp = await this.unitOfWorks.Employee.GetByIdAsync(x=>x.Deleted_AT == null && x.EmployeeId == request.EmployeeId);
+            var Emp = await unitOfWorks.Employee.GetByIdAsync(x => x.Deleted_AT == null && x.EmployeeId == request.EmployeeId);
             if (Emp == null)
             {
                 throw new InvalidOperationException("Employee does not exists.");
             }
-             return this.mapper.Map<EmployeeDto>(Emp);
+            return mapper.Map<EmployeeDto>(Emp);
         }
     }
 }

@@ -2,6 +2,7 @@
 using EMS.Application.Common;
 using EMS.Application.Contract;
 using EMS.Application.DTO.Employee;
+using EMS.Application.Features.Employees.Handlers.Queruies.Requests;
 using EMS.Data.Settings;
 using MediatR;
 using System;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Application.Features.Employees.Handlers.Queruies
+namespace EMS.Application.Features.Employees.Handlers.Queruies.Handler
 {
     public class GetEmployeeListsHandlers : IRequestHandler<GetEmployeeListRequests, List<EmployeeDto>>
     {
@@ -25,8 +26,8 @@ namespace EMS.Application.Features.Employees.Handlers.Queruies
         }
         public async Task<List<EmployeeDto>> Handle(GetEmployeeListRequests request, CancellationToken cancellationToken)
         {
-            var Emp = await this.unitOfWorks.Employee.GetAllAsync(x=>x.Deleted_AT == null);
-            return this.mapper.Map<List<EmployeeDto>>(Emp);
+            var Emp = await unitOfWorks.Employee.GetAllAsync(x => x.Deleted_AT == null);
+            return mapper.Map<List<EmployeeDto>>(Emp);
         }
     }
 }

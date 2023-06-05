@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EMS.Application.Common;
+using EMS.Application.Features.Employees.Handlers.Commands.Requests;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Application.Features.Employees.Handlers.Commands
+namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
 {
     public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployeeRequests>
     {
@@ -22,14 +23,14 @@ namespace EMS.Application.Features.Employees.Handlers.Commands
 
         public async Task<Unit> Handle(DeleteEmployeeRequests request, CancellationToken cancellationToken)
         {
-            var leaveType = await this.unitOfWorks.Employee.GetByIdAsync(x => x.EmployeeId == request.EmployeeId && x.Deleted_AT == null);
+            var leaveType = await unitOfWorks.Employee.GetByIdAsync(x => x.EmployeeId == request.EmployeeId && x.Deleted_AT == null);
             if (leaveType == null)
             {
                 throw new NotImplementedException("Employee not exists.");
             }
-            await this.unitOfWorks.Employee.DeleteByIdAsync(leaveType.EmployeeId);
+            await unitOfWorks.Employee.DeleteByIdAsync(leaveType.EmployeeId);
             return Unit.Value;
         }
-    
+
     }
 }
