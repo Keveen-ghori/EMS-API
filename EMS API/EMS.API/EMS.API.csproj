@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <Folder Include="Api\Attributes\" />
+    <Folder Include="Common\" />
   </ItemGroup>
 
   <ItemGroup>

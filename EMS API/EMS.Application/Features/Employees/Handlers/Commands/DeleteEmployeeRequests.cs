@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Application.DTO.Common
+namespace EMS.Application.Features.Employees.Handlers.Commands
 {
-    public class EmployeeBaseAttributes
+    public class DeleteEmployeeRequests: IRequest
     {
         public long EmployeeId { get; set; }
-        public string? UserName { get; set; } = string.Empty;
     }
 }

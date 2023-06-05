@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EMS.Application\EMS.Application.csproj" />
     <ProjectReference Include="..\EMS.Core\EMS.Core.csproj" />
     <ProjectReference Include="..\EMS.Data\EMS.Data.csproj" />

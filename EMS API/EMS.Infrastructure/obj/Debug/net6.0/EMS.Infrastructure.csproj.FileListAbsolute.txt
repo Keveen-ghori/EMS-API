@@ -1,8 +1,10 @@
 D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Infrastructure.deps.json
 D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Infrastructure.dll
 D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Infrastructure.pdb
+D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Application.dll
 D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Core.dll
 D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Data.dll
+D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Application.pdb
 D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Core.pdb
 D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Data.pdb
 D:\EMS\EMS API\EMS.Infrastructure\obj\Debug\net6.0\EMS.Infrastructure.csproj.AssemblyReference.cache
@@ -15,5 +17,3 @@ D:\EMS\EMS API\EMS.Infrastructure\obj\Debug\net6.0\EMS.Infrastructure.dll
 D:\EMS\EMS API\EMS.Infrastructure\obj\Debug\net6.0\refint\EMS.Infrastructure.dll
 D:\EMS\EMS API\EMS.Infrastructure\obj\Debug\net6.0\EMS.Infrastructure.pdb
 D:\EMS\EMS API\EMS.Infrastructure\obj\Debug\net6.0\ref\EMS.Infrastructure.dll
-D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Application.dll
-D:\EMS\EMS API\EMS.Infrastructure\bin\Debug\net6.0\EMS.Application.pdb

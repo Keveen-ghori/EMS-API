@@ -1,6 +1,4 @@
-﻿using EMS.API.DTO.Employee;
-using EMS.Application.Common;
-using EMS.Data.Models;
+﻿using EMS.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +9,5 @@ namespace EMS.Application.Contract
 {
     public interface IEmployeeRepository : IGenericRepositoryBase<Employee>
     {
-
     }
 }

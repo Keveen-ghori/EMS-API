@@ -1,4 +1,5 @@
-﻿using EMS.Application.Common;
+﻿using EMS.Application.Contract;
+using EMS.Data.Models;
 using EMS.Data.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,38 +11,61 @@ using System.Threading.Tasks;
 
 namespace EMS.Infrastructure.EmployeeRepository
 {
-    public class GenericRepositoryBase<T>: IGenericRepositoryBase<T> where T: class
+    public class GenericRepositoryBase<T> : IGenericRepositoryBase<T> where T : class
     {
         private readonly EmployeeManagementContext context;
+        private readonly DbSet<T> dbSet;
 
         public GenericRepositoryBase(EmployeeManagementContext context)
         {
             this.context = context;
+            this.dbSet = context.Set<T>();
         }
 
-        public void Create(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            this.context.Set<T>().Add(entity);
+            await this.context.AddAsync(entity);
+            await this.context.SaveChangesAsync();
+            return entity;
         }
 
-        public void Delete(T entity)
+        public async Task DeleteByIdAsync(long Id)
         {
-            this.context.Set<T>().Remove(entity);
+            var entity = await dbSet.FindAsync(Id);
+            if (entity != null)
+            {
+                var deletedProperty = entity.GetType().GetProperty("Deleted_AT");
+                if (deletedProperty != null)
+                {
+                    deletedProperty.SetValue(entity, DateTime.Now);
+                    await context.SaveChangesAsync();
+                }
+            }
         }
 
-        public IQueryable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expression)
         {
-            return this.context.Set<T>().AsNoTracking();
+            return await this.context.Set<T>().Where(expression).ToListAsync();
         }
 
-        public IQueryable<T> GetById(Expression<Func<T, bool>> expression)
+        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> expression)
         {
-            return this.context.Set<T>().Where(expression).AsNoTracking();
+            return await this.context.Set<T>().FirstOrDefaultAsync(expression);
+
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            this.context.Set<T>().Update(entity);
+            this.context.Entry(entity).CurrentValues.SetValues(entity);
+            await this.context.SaveChangesAsync();
+
         }
+
+        public async Task<bool> IsEmailExists(Expression<Func<T, bool>> expression)
+        {
+            var entity = await this.context.Set<T>().FirstOrDefaultAsync(expression);
+            return entity != null;
+        }
+
     }
 }

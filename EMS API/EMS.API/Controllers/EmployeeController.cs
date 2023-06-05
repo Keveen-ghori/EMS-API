@@ -1,89 +1,105 @@
-﻿using EMS.API.Api.Models.ApiModels;
-using EMS.API.Common;
-using EMS.API.DTO.Employee;
+﻿using AutoMapper;
+using EMS.API.Api.Models.ApiModels;
+using EMS.Application.Common;
 using EMS.Application.Contract;
 using EMS.Application.DTO.Employee;
+using EMS.Application.Features.Employees.Handlers.Commands;
+using EMS.Application.Features.Employees.Handlers.Queruies;
 using EMS.Data.Models;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace EMS.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IServiceRepository serviceRepository;
+        private readonly IMediator _mediator;
 
-        public EmployeeController(IServiceRepository serviceRepository)
+
+        public EmployeeController(IMediator mediator)
         {
-            this.serviceRepository = serviceRepository;
+            _mediator = mediator;
         }
 
+        #region Get All Employees
         [HttpGet]
-        public ApiResponse<List<GetEmployee>> Get()
+        public async Task<ApiResponse<List<EmployeeDto>>> GetEmployees()
         {
-            var apiResponse = new ApiResponse<List<GetEmployee>>();
+            var apiResponse = new ApiResponse<List<EmployeeDto>>();
 
             try
             {
-                List<GetEmployee> model = new List<GetEmployee>();
-
-                var Emp = this.serviceRepository.Employee.GetAll();
-
-                foreach (var item in Emp)
-                {
-                    model.Add(EmployeeMapper.MapToModel(item));
-                }
-                return apiResponse.HandleResponse(model);
+                var employees = await _mediator.Send(new GetEmployeeListRequests());
+                return apiResponse.HandleResponse(employees);
             }
             catch (Exception ex)
             {
                 return apiResponse.HandleException(ex.Message);
             }
-
         }
+        #endregion
 
+        #region Get Employees
         [HttpGet]
         [Route("{EmployeeId:long}")]
-        public ApiResponse<List<GetEmployee>> GetById(long EmployeeId)
+        public async Task<ApiResponse<EmployeeDto>> GetEmpById([FromRoute] long EmployeeId)
         {
-            var apiResponse = new ApiResponse<List<GetEmployee>>();
+            var apiResponse = new ApiResponse<EmployeeDto>();
 
             try
             {
-                List<GetEmployee> model = new();
-
-                var Emp = this.serviceRepository.Employee.GetById(emp => emp.EmployeeId == EmployeeId);
-
-                model.Add(EmployeeMapper.MapToModel(Emp.First()));
-
-                return apiResponse.HandleResponse(model);
+                var employee = await _mediator.Send(new EmployeeDetailsRequests { EmployeeId = EmployeeId });
+                return apiResponse.HandleResponse(employee);
             }
             catch (Exception ex)
             {
                 return apiResponse.HandleException(ex.Message);
             }
-        }
 
+        }
+        #endregion
+
+        #region Create Employee
         [HttpPost]
-        public ApiResponse<List<GetEmployee>> CreateEmp([FromBody] Employee model)
+        public async Task<ApiResponse<long>> CreateEmp([FromBody] CreateEmployeeDto model)
         {
-            var apiResponse = new ApiResponse<List<GetEmployee>>();
+            var apiResponse = new ApiResponse<long>();
 
             try
             {
-
-                if (ModelState.IsValid)
+                // Validate the model
+                if (!ModelState.IsValid)
                 {
-                    this.serviceRepository.Employee.Create(model);
-
-                    var modelDto = new List<GetEmployee>();
-                    modelDto.Add(EmployeeMapper.MapToModel(model));
-                    return apiResponse.HandleResponse(modelDto);
+                    return apiResponse.HandleModelStateFailure(ModelState);
                 }
-                return apiResponse.HandleModelStateFailure(ModelState);
+                
+                var newEmp = await _mediator.Send(new CreateEmployeeRequests { EmployeeDto = model });
+                return apiResponse.HandleResponse(newEmp.EmployeeId);
+
+            }
+            catch (Exception ex)
+            {
+                return apiResponse.HandleException(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Delete Employee
+        [HttpDelete("{EmployeeId:long}")]
+        public async Task<ApiResponse<NoContentResult>> Delete([FromRoute]long EmployeeId)
+        {
+            var apiResponse = new ApiResponse<NoContentResult>();
+            try
+            {
+                var command = new DeleteEmployeeRequests { EmployeeId = EmployeeId };
+                await _mediator.Send(command);
+                return apiResponse.HandleResponse(NoContent());
             }
             catch (Exception ex)
             {
@@ -91,6 +107,27 @@ namespace EMS.API.Controllers
             }
         }
 
+        #endregion
 
+        #region Check Email
+        [HttpGet]
+        [Route("{Email}")]
+        public async Task<ApiResponse<bool>> CheckEmail([FromRoute] string Email)
+        {
+            var apiResponse = new ApiResponse<bool>();
+
+            try
+            {
+                var employee = await _mediator.Send(new CheckEmailEmployeeRequest { Email = Email });
+                return apiResponse.HandleResponse(employee);
+            }
+            catch (Exception ex)
+            {
+                return apiResponse.HandleException(ex.Message);
+            }
+
+        }
+        #endregion
     }
 }
+
