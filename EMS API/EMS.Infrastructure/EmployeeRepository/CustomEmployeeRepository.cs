@@ -20,6 +20,7 @@ namespace EMS.Infrastructure.EmployeeRepository
             this.context = context;
         }
 
+        #region Create
         public async Task<SaveEmployeeDto> CreateEmployee(SaveEmployeeDto entity)
         {
             var Emp = new Employee
@@ -49,13 +50,15 @@ namespace EMS.Infrastructure.EmployeeRepository
 
             return saveEmployeeDto;
         }
+        #endregion
 
+        #region Update using PUT
         public async Task UpdateEmployee(Employee entity)
         {
             this.context.Entry(entity).State = EntityState.Modified;
             entity.UserName = entity.FirstName + " " + entity.LastName;
             entity.Updated_At = DateTime.Now;
-            if(!entity.IsLocked)
+            if (!entity.IsLocked)
             {
                 entity.Attemps = 0;
             }
@@ -65,7 +68,9 @@ namespace EMS.Infrastructure.EmployeeRepository
             }
             await this.context.SaveChangesAsync();
         }
+        #endregion
 
+        #region Update using PATCH
         public async Task UpdateEmpUsingpatch(IEnumerable<Employee> entity)
         {
 
@@ -77,6 +82,6 @@ namespace EMS.Infrastructure.EmployeeRepository
 
             await this.context.SaveChangesAsync();
         }
-
+        #endregion
     }
 }

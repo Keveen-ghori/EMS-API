@@ -13,6 +13,10 @@ namespace EMS.Application.DTO.Employee
     public class EmployeeDto
     {
         [DataMember]
+        public string FirstName { get; set; }   = string.Empty;
+        [DataMember]
+        public string Lastname { get; set; } = string.Empty;
+        [DataMember]
         public long EmployeeId { get; set; }
         [DataMember]
         public string? UserName { get; set; } = string.Empty;

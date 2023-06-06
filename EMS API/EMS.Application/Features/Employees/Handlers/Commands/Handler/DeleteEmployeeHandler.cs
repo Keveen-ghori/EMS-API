@@ -12,6 +12,7 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
 {
     public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployeeRequests>
     {
+        #region Const
         private readonly IunitOfWorks unitOfWorks;
         private readonly IMapper mapper;
 
@@ -20,7 +21,9 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
             this.unitOfWorks = unitOfWorks;
             this.mapper = mapper;
         }
+        #endregion
 
+        #region handler
         public async Task<Unit> Handle(DeleteEmployeeRequests request, CancellationToken cancellationToken)
         {
             var leaveType = await unitOfWorks.Employee.GetByIdAsync(x => x.EmployeeId == request.EmployeeId && x.Deleted_AT == null);
@@ -31,6 +34,6 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
             await unitOfWorks.Employee.DeleteByIdAsync(leaveType.EmployeeId);
             return Unit.Value;
         }
-
+        #endregion
     }
 }

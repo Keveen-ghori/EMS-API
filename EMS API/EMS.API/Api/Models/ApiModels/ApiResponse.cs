@@ -13,6 +13,7 @@ namespace EMS.API.Api.Models.ApiModels
         public T Content { get; set; }
     }
 
+    #region Message
     public class ApiMessage
     {
         public static class MessageTypes
@@ -26,6 +27,9 @@ namespace EMS.API.Api.Models.ApiModels
         public string Message { get; set; }
     }
 
+    #endregion
+
+    #region Handle Exception
     public static class ApiMessageExtensions
     {
         public static ApiResponse<T> HandleException<T>(this ApiModels.ApiResponse<T> apiResponse, string exceptionMessage)
@@ -40,7 +44,9 @@ namespace EMS.API.Api.Models.ApiModels
 
             return apiResponse;
         }
+        #endregion
 
+        #region Handle Response
         public static ApiResponse<T> HandleResponse<T>(this ApiModels.ApiResponse<T> apiResponse, T responseContent)
         {
             var statusCode = (int)apiResponse.StatusCode;
@@ -49,7 +55,9 @@ namespace EMS.API.Api.Models.ApiModels
             apiResponse.Content = responseContent;
             return apiResponse;
         }
+        #endregion
 
+        #region Handle Model State
         public static ApiResponse<T> HandleModelStateFailure<T>(this ApiResponse<T> apiResponse, ModelStateDictionary modelState)
         {
             var validationErrors = new List<ApiMessage>();
@@ -66,5 +74,6 @@ namespace EMS.API.Api.Models.ApiModels
 
             return apiResponse;
         }
+        #endregion
     }
 }

@@ -15,6 +15,7 @@ namespace EMS.Application.Features.Employees.Handlers.Queruies.Handler
 {
     public class GetEmployeeListsHandlers : IRequestHandler<GetEmployeeListRequests, List<EmployeeDto>>
     {
+        #region Const
         private readonly IunitOfWorks unitOfWorks;
         private readonly IMapper mapper;
 
@@ -24,10 +25,14 @@ namespace EMS.Application.Features.Employees.Handlers.Queruies.Handler
             this.mapper = mapper;
 
         }
+        #endregion
+
+        #region Handler
         public async Task<List<EmployeeDto>> Handle(GetEmployeeListRequests request, CancellationToken cancellationToken)
         {
             var Emp = await unitOfWorks.Employee.GetAllAsync(x => x.Deleted_AT == null);
             return mapper.Map<List<EmployeeDto>>(Emp);
         }
+        #endregion
     }
 }

@@ -15,7 +15,7 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
 {
     public class UpdateEmpUsingPatchHandler : IRequestHandler<UpdateEmpUsingPatchRequest, Unit>
     {
-
+        #region Const
         private readonly IunitOfWorks unitOfWorks;
         private readonly IMapper mapper;
 
@@ -25,7 +25,8 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
             this.mapper = mapper;
         }
 
-
+        #endregion
+        #region Handle
         public async Task<Unit> Handle(UpdateEmpUsingPatchRequest request, CancellationToken cancellationToken)
         {
             var employeeEntities = await unitOfWorks.Employee.GetAllAsync(x => x.Deleted_AT == null);
@@ -49,9 +50,6 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
 
             return Unit.Value;
         }
-
-
-
-
+        #endregion
     }
 }

@@ -17,6 +17,7 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
 {
     public class CreateEmployeeHandler : IRequestHandler<CreateEmployeeRequests, SaveEmployeeDto>
     {
+        #region Const
         private readonly IunitOfWorks unitOfWorks;
         private readonly IMapper mapper;
 
@@ -25,7 +26,8 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
             this.unitOfWorks = unitOfWorks;
             this.mapper = mapper;
         }
-
+        #endregion
+        #region Handle
         public async Task<SaveEmployeeDto> Handle(CreateEmployeeRequests request, CancellationToken cancellationToken)
         {
             var EmailCheck = await unitOfWorks.Employee.IsEmailExists(x => x.Email == request.EmployeeDto.Email && x.Deleted_AT == null);
@@ -37,5 +39,6 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
             Emp = await unitOfWorks.QueryEmployee.CreateEmployee(Emp);
             return Emp;
         }
+        #endregion
     }
 }

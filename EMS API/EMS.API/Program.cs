@@ -24,7 +24,7 @@ builder.Services.AddDbContext<EmployeeManagementContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //builder.Services.AddControllers();
 builder.Services.AddControllers().AddNewtonsoftJson();
-
+builder.Services.ConfigureApplicationServices();
 //Register interface class
 builder.Services.AddScoped<IunitOfWorks, UnitOfWorks>();
 builder.Services.AddMediatR(typeof(GetEmployeeListsHandlers).Assembly, typeof(GetEmployeeDetailsHandler).Assembly);

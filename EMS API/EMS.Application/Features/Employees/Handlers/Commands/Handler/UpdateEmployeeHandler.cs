@@ -13,6 +13,7 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
 {
     public class UpdateEmployeeHandler : IRequestHandler<UpdateEmployeeRequest, bool>
     {
+        #region constructor
         private readonly IunitOfWorks unitOfWorks;
         private readonly IMapper mapper;
 
@@ -21,6 +22,8 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
             this.unitOfWorks = unitOfWorks;
             this.mapper = mapper;
         }
+        #endregion
+        #region Interface
         public async Task<bool> Handle(UpdateEmployeeRequest request, CancellationToken cancellationToken)
         {
             var Emp = await unitOfWorks.Employee.GetByIdAsync(x => x.Deleted_AT == null && x.EmployeeId == request.EmployeeId);
@@ -30,5 +33,6 @@ namespace EMS.Application.Features.Employees.Handlers.Commands.Handler
             this.unitOfWorks.QueryEmployee?.UpdateEmployee(Emp);
             return true;
         }
+        #endregion
     }
 }
