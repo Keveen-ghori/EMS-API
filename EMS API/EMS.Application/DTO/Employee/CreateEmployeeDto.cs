@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -28,9 +29,10 @@ namespace EMS.Application.DTO.Employee
         [Required(ErrorMessage = SystemMessages.PasswordRequired)]
         [RegularExpression(RegularExpression.Password, ErrorMessage = SystemMessages.PasswordValidation)]
         public string Password { get; set; } = String.Empty;
-        [Required(ErrorMessage = SystemMessages.ConfirmPasswordRequired)]
-        [Compare(nameof(Password))]
-        public string ConfirmPassword { get; set; } = String.Empty;
+        //[Required(ErrorMessage = SystemMessages.ConfirmPasswordRequired)]
+        //[Compare(nameof(Password))]
+        //[NotMapped]
+        //public string ConfirmPassword { get; set; } = String.Empty;
         [DataMember]
         [Required(ErrorMessage = SystemMessages.DOB)]
         public DateTime? DOB { get; set; }
